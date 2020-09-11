@@ -404,7 +404,7 @@ public class FileUploadController
 	{
 		//System.out.println(filename + "!!!" + type + "!!!" + mode);
 		final TGW tgw = new TGW();
-		final String savedDirectory = ".." + File.separator + ".." + File.separator + ".." + File.separator + ".." + File.separator;
+		final String savedDirectory = "";
 		final String name = savedDirectory.concat(filename);
 		try
 		{
@@ -465,7 +465,7 @@ public class FileUploadController
 	final int co, final Model model, @Validated
 	final LogfileUpload file, final BindingResult result)
 	{
-		final String savedDirectory = ".." + File.separator + ".." + File.separator + ".." + File.separator + ".." + File.separator;
+		final String savedDirectory = "";
 		String fname = file.getFile().getOriginalFilename();
 		String name = savedDirectory + fname;
 		jdbclogAnalyzer.reset();

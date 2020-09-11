@@ -1905,7 +1905,7 @@ Ext.define('hybrisDesktop.ThreadDumpAnalyzer', {
     	        	tooltip: 'Readme',
     	        	handler: function(event, toolEl, panel){
     	        		function showResult(btn){
-    	        			var w = new Ext.Window({
+    	        			/*var w = new Ext.Window({
         	        			  autoLoad: {
         	        			    url: "howtotheaddumps2.html",
         	        			    text: "Loading...",
@@ -1919,7 +1919,8 @@ Ext.define('hybrisDesktop.ThreadDumpAnalyzer', {
         	        			  width: 800
         	        			});
         	        		w.center();
-        	        		w.show();
+        	        		w.show();*/
+    	        			window.open(window.location.pathname+"/howtotheaddumps2.html")
     	        	    };
     	        		Ext.MessageBox.show({
     	                    title: 'Any problems?',
