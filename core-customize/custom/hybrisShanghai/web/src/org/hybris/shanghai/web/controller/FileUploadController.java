@@ -100,7 +100,8 @@ public class FileUploadController
 	{
 		try
 		{
-			String savedDirectory = ".." + File.separator + ".." + File.separator + ".." + File.separator + ".." + File.separator;
+			//String savedDirectory = ".." + File.separator + ".." + File.separator + ".." + File.separator + ".." + File.separator;
+			String savedDirectory = "";
 			String fname = file.getFile().getOriginalFilename();
 			String name = savedDirectory + fname;
 			File f = new File(name);
