@@ -6,24 +6,31 @@ package org.hybris.shanghai.web.controller;
 //import de.hybris.platform.hac.facade.impl.ThreadMonitor;
 import de.hybris.platform.servicelayer.config.ConfigurationService;
 import de.hybris.tools.system.tgw.TGW;
-import de.hybris.tools.system.tgw.TGW.Report;
 import de.hybris.tools.system.tgw.ThreadDumpSourceType;
+import de.hybris.tools.system.tgw.classifier.ThreadClassifier;
+import de.hybris.tools.system.tgw.report.Report;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Properties;
-import java.util.concurrent.ExecutionException;
+import java.util.UUID;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 import org.hybris.shanghai.facades.ThreadDumpAnalyzerFacade;
 import org.hybris.shanghai.fileupload.LogFileValidator;
 import org.hybris.shanghai.fileupload.LogfileUpload;
@@ -102,7 +109,7 @@ public class FileUploadController
 		{
 			//String savedDirectory = ".." + File.separator + ".." + File.separator + ".." + File.separator + ".." + File.separator;
 			String savedDirectory = "";
-			String fname = file.getFile().getOriginalFilename();
+			String fname = UUID.randomUUID().toString().replace("-", "") + file.getFile().getOriginalFilename();
 			String name = savedDirectory + fname;
 			File f = new File(name);
 			final byte[] bytes = file.getFile().getBytes();
@@ -348,7 +355,7 @@ public class FileUploadController
 		try
 		{
 			final String savedDirectory = "";
-			final String fname = "hac.txt";
+			final String fname = UUID.randomUUID().toString().replace("-", "") + "hac.txt";
 			String name = savedDirectory.concat(fname);
 			final File f = new File(name);
 			final ThreadMonitor tm = new ThreadMonitor();
@@ -377,6 +384,25 @@ public class FileUploadController
 
 	}
 
+	private static Properties getTGWProperties() throws IOException
+	{
+		final Properties tgwProps = new Properties();
+		final File f = new File("tgw.properties");
+		if (f.isFile())
+		{
+			try (FileInputStream fis = new FileInputStream(f))
+			{
+				tgwProps.load(fis);
+				System.out.println("Loading properties from disk");
+			}
+		}
+		else
+		{
+			tgwProps.load(TGW.class.getResourceAsStream(TGW.RESOURCES_ROOT + "/tgw.properties"));
+		}
+		return tgwProps;
+	}
+
 	/*
 	 * @RequestMapping(value = "/test", method = RequestMethod.GET) public @ResponseBody String test() { try { if
 	 * (this.dumpCollector == null) { this.dumpCollector = new ThreadDumpCollector(); } if
@@ -394,6 +420,7 @@ public class FileUploadController
 	 * }
 	 */
 
+
 	@RequestMapping(value = "/tdw", params =
 	{ "filename", "type", "mode" }, method = RequestMethod.GET)
 	public @ResponseBody String tdw(@RequestParam(value = "filename")
@@ -402,11 +429,22 @@ public class FileUploadController
 	final String mode)
 	{
 		//System.out.println(filename + "!!!" + type + "!!!" + mode);
-		final TGW tgw = new TGW();
-		final String savedDirectory = "";
+		//final TGW tgw = new TGW();
+		final String[] x = new String[0];
+		final Options options = new Options();
+		final CommandLineParser parser = new DefaultParser();
+		options.addOption("m", "mood", true, "Mood: iamlazy");
+		options.addOption("o", "output", true, "Report output filename");
+		options.addOption("f", "format", true, "Format: JSTACK, HAC, SAP");
+		options.addOption("i", "ignore", true, "Methods to ignore");
+		options.addOption("a", "api", true, "API Methods");
+
+
+		final String savedDirectory = "./";
 		final String name = savedDirectory.concat(filename);
 		try
 		{
+			final CommandLine line = parser.parse(options, x);
 			ThreadDumpSourceType srcType = ThreadDumpSourceType.JSTACK;
 			if (type != null && !type.isEmpty())
 			{
@@ -419,11 +457,14 @@ public class FileUploadController
 					srcType = ThreadDumpSourceType.HAC;
 				}
 			}
+			final TGW tgw = new TGW(line);
+			final Properties tgwProps = getTGWProperties();
+			tgw.setThreadClassifier(ThreadClassifier.get(tgwProps));
 			tgw.importDirectory(name, srcType);
 			final Properties props = new Properties();
-			props.load(TGW.class.getResourceAsStream("/de/hybris/tools/system/tgw/httl.properties"));
+			props.load(TGW.class.getResourceAsStream(TGW.RESOURCES_ROOT + "/httl.properties"));
 			final Engine engine = Engine.getEngine(props);
-			final Template template = engine.getTemplate("/de/hybris/tools/system/tgw/report_template.html");
+			final Template template = engine.getTemplate(TGW.RESOURCES_ROOT + "/report_template.html");
 			final ByteArrayOutputStream bao = new ByteArrayOutputStream();
 			final Report report = tgw.createReport();
 			template.render(report, bao);
@@ -436,7 +477,7 @@ public class FileUploadController
 			e.printStackTrace();
 			return e.getMessage();
 		}
-		catch (final ExecutionException e)
+		catch (final ParseException e)
 		{
 			// YTODO Auto-generated catch block
 			e.printStackTrace();
@@ -465,7 +506,7 @@ public class FileUploadController
 	final LogfileUpload file, final BindingResult result)
 	{
 		final String savedDirectory = "";
-		String fname = file.getFile().getOriginalFilename();
+		String fname = UUID.randomUUID().toString().replace("-", "") + file.getFile().getOriginalFilename();
 		String name = savedDirectory + fname;
 		jdbclogAnalyzer.reset();
 

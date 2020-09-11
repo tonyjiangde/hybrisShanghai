@@ -1950,6 +1950,7 @@ Ext.define('hybrisDesktop.ThreadDumpAnalyzer', {
                             	    title : "TGW Report",
                             	    width : 1000,
                             	    height: 800,
+                            	    bodyCls: 'popWindow',
                             	    closeAction:'destroy',
                             	    maximizable: true,
                             	    layout : 'fit',
