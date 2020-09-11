@@ -347,8 +347,7 @@ public class FileUploadController
 	{
 		try
 		{
-			final String savedDirectory = ".." + File.separator + ".." + File.separator + ".." + File.separator + ".."
-					+ File.separator;
+			final String savedDirectory = "";
 			final String fname = "hac.txt";
 			String name = savedDirectory.concat(fname);
 			final File f = new File(name);
