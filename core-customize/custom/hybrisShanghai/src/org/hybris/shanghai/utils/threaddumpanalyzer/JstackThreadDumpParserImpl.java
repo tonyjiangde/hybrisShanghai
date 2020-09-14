@@ -224,7 +224,15 @@ public class JstackThreadDumpParserImpl implements ThreadDumpParser
 				{
 					tmp = new String[2];
 					tmp[1] = str.substring(str.indexOf("<") + 1, str.indexOf(">"));
-					tmp[0] = str.substring(str.indexOf("(a") + 2, str.indexOf(")"));
+					if (str.indexOf("(a") != -1 && str.indexOf(")") != -1)
+					{
+						tmp[0] = str.substring(str.indexOf("(a") + 2, str.indexOf(")"));
+					}
+					else
+					{
+						tmp[0] = tmp[1];
+					}
+					//tmp[0] = str.substring(str.indexOf("(a") + 2, str.indexOf(")"));
 					if (tmp.length == 2)
 					{
 						this.threadsSOMonitors.add(thread);
@@ -261,7 +269,15 @@ public class JstackThreadDumpParserImpl implements ThreadDumpParser
 					//tmp = str.substring(str.indexOf("- ") + 2).split("@");
 					tmp = new String[2];
 					tmp[1] = str.substring(str.indexOf("<") + 1, str.indexOf(">"));
-					tmp[0] = str.substring(str.indexOf("(a") + 2, str.indexOf(")"));
+					//tmp[0] = str.substring(str.indexOf("(a") + 2, str.indexOf(")"));
+					if (str.indexOf("(a") != -1 && str.indexOf(")") != -1)
+					{
+						tmp[0] = str.substring(str.indexOf("(a") + 2, str.indexOf(")"));
+					}
+					else
+					{
+						tmp[0] = tmp[1];
+					}
 					threadsLockingMonitors.add(thread);
 					//System.out.println(tmp[0]+"!!!!"+tmp[1]);
 					if (tmp.length == 2)
@@ -288,7 +304,14 @@ public class JstackThreadDumpParserImpl implements ThreadDumpParser
 				{
 					tmp = new String[2];
 					tmp[1] = str.substring(str.indexOf("<") + 1, str.indexOf(">"));
-					tmp[0] = str.substring(str.indexOf("(a") + 2, str.indexOf(")"));
+					if (str.indexOf("(a") != -1 && str.indexOf(")") != -1)
+					{
+						tmp[0] = str.substring(str.indexOf("(a") + 2, str.indexOf(")"));
+					}
+					else
+					{
+						tmp[0] = tmp[1];
+					}
 					if (tmp.length == 2)
 					{
 						allmonitors.put(tmp[1].trim(), tmp[0].trim());
