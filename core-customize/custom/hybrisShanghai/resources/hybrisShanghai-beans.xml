@@ -32,6 +32,15 @@
 		<property name="codeofsupertype" type="String"/>
 		<property name="textensionname" type="String"/>
 	</bean>
+	<bean class="org.hybris.shanghai.data.spring.MyBeanInfo">
+		<description>Data object representing a type</description>
+		<property name="name" type="String"/>
+		<property name="classname" type="String"/>
+		<property name="alias" type="String[]"/>
+		<property name="scope" type="String"/>
+		<property name="isSingleton" type="boolean"/>
+		<property name="isAbstract" type="boolean"/>
+	</bean>
 	<bean class="org.hybris.shanghai.data.AttributesData">
 		<description>Data object representing a Attribute</description>
 		<property name="attributepk" type="String"/>
@@ -58,4 +67,6 @@
 		<property name="argumentType" type="String"/>
 		<property name="returntype" type="String"/>
 	</bean>
+	
+	
 </beans>

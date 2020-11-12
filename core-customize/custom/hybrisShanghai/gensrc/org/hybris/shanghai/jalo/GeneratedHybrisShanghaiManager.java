@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at Jul 29, 2019 2:14:29 PM                     ---
+ * --- Generated at Nov 6, 2020, 9:59:26 PM                     ---
  * ----------------------------------------------------------------
  */
 package org.hybris.shanghai.jalo;
@@ -16,7 +16,7 @@ import org.hybris.shanghai.constants.HybrisShanghaiConstants;
 /**
  * Generated class for type <code>HybrisShanghaiManager</code>.
  */
-@SuppressWarnings({"deprecation","unused","cast","PMD"})
+@SuppressWarnings({"deprecation","unused","cast"})
 public abstract class GeneratedHybrisShanghaiManager extends Extension
 {
 	protected static final Map<String, Map<String, AttributeMode>> DEFAULT_INITIAL_ATTRIBUTES;

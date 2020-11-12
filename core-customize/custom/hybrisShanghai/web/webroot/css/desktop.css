@@ -217,6 +217,12 @@ color: green !important;
 .jdbc-shortcut {
     background-image: url(../images/database_4.png);
 }
+.java-shortcut {
+    background-image: url(../images/java48.png);
+}
+.spring-shortcut {
+    background-image: url(../images/spring48.png);
+}
 .thread-shortcut {
     background-image: url(../images/thread.png);
 }
@@ -278,6 +284,12 @@ color: green !important;
 }
 .icon-jdbc {
     background-image:url( ../images/database_small.png ) !important;
+}
+.icon-java {
+    background-image:url( ../images/java16.png ) !important;
+}
+.icon-spring {
+    background-image:url( ../images/spring16.png ) !important;
 }
 .icon-typebrowser {
     background-image:url( ../images/typebrowser-icon.png ) !important;

@@ -82,18 +82,57 @@
  	  	 </patternset>
  
 --><project name="hybrisShanghai_buildcallbacks">
+	
 
 	<!-- 
 	    Called whenever 'ant ear' is used. this callback can be used to modify the content of the ear file
 	
 	     ${ear.path}: 			path to ear
 	 -->
-	<macrodef name="hybrisShanghai_before_ear">
+	<!--<macrodef name="ui">
 		<sequential>
-
-			<!-- you can do anything before the EAR file is being packed -->
-
+			<echo message="npm_install_bower_install_grunt_all_offline"/>
+			<echo message="wooliesgcstorefront_movelibs"/>
 		</sequential>
+	 </macrodef>
+	<macrodef name="repairePermissions">
+	        <sequential>
+	            <if>
+	            	<not>
+	            		<os family="windows"/>
+	            	</not>
+	                <then>
+	                    <echo message="changing the permissions of sso extension at ${ext.samlsinglesignon.path}/web"/>
+	                    <exec executable="chmod">
+	                        <arg line="-R 755 ${ext.samlsinglesignon.path}/web"/>
+	                    </exec>
+	                          
+	                </then>
+	            </if>
+	        </sequential>
 	</macrodef>
+	<macrodef name="hybrisShanghai_after_customize">
+			<sequential>
 
+				<echo message="do whatever you want after all customize"/>
+				<repairePermissions />
+			</sequential>
+		</macrodef>
+
+	
+	<macrodef name="hybrisShanghai_after_all">
+			<sequential>
+
+				<echo message="do whatever you want after all"/>
+				<ui />
+
+			</sequential>
+		</macrodef>
+	<macrodef name="hybrisShanghai_after_build">
+				<sequential>
+
+					<echo message="do whatever you want after build"/>
+
+				</sequential>
+			</macrodef>-->
 </project>

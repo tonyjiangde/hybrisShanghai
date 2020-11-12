@@ -46,7 +46,7 @@ var modifier = [
                 ['unique', 'true;false'],
                 ['virtual', 'true;false'],
             ];
-function createStore(cfg) {
+function mycreateStore(cfg) {
     // The data store holding the states; shared by each of the ComboBox examples below
     return Ext.create('Ext.data.Store', Ext.apply({
         autoDestroy: true,
@@ -251,7 +251,7 @@ Ext.define('hybrisDesktop.ImpexHelper.hybrisModifierContainer', {
                         }]
                     }];
 
-
+        
         this.callParent(this);
     }
 });
@@ -1690,17 +1690,15 @@ Ext.define('hybrisDesktop.ImpexHelper', {
                 id:'impex-type',
                 forceSelection: true,
                 allowBlank: false,
-                store: createStore({
+                store: mycreateStore({
                     proxy: {
                         type: 'ajax',
                         url: 'services/showtypes.do',
                         reader: {
                             type: 'json'
-
                         }
                     },
-                    autoLoad: true,
-                    data: null
+                    autoLoad: true
                 }),
                 displayField: 'code',
                 //queryParam: 'search',
@@ -1782,7 +1780,7 @@ Ext.define('hybrisDesktop.ImpexHelper', {
 
             });
 
-
+            //typecombo.getStore().load*()
 
             var formPanel = Ext.create('Ext.form.Panel', {
                 frame: true,
@@ -2140,6 +2138,7 @@ Ext.define('hybrisDesktop.ImpexHelper', {
                     			
                     		
                         	Ext.getCmp('impex-value').setValue(mode+ ' '+type+";"+atts);
+                        	Ext.getCmp('impex-east').expand();
                     	}
                     	
                         //alert(mode+ '  gaga   '+type);

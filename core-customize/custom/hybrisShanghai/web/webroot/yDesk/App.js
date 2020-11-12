@@ -16,6 +16,8 @@ Ext.define('hybrisDesktop.App', {
         'hybrisDesktop.JDBCLogAnalyzer',
         'hybrisDesktop.ThreadDumpAnalyzer',
         'hybrisDesktop.DatahubVirtualizer',
+        'hybrisDesktop.JavaEnvironmentBrowser',
+        'hybrisDesktop.SpringContextBrowser',
         'hybrisDesktop.Settings'
     ],
 
@@ -33,6 +35,8 @@ Ext.define('hybrisDesktop.App', {
             new hybrisDesktop.ImpexHelper(),
             new hybrisDesktop.DatahubVirtualizer(),
             new hybrisDesktop.JDBCLogAnalyzer(),
+            new hybrisDesktop.JavaEnvironmentBrowser(),
+            new hybrisDesktop.SpringContextBrowser(),
             new hybrisDesktop.ThreadDumpAnalyzer()
         ];
     },
@@ -53,6 +57,8 @@ Ext.define('hybrisDesktop.App', {
                     { name: 'ImpexHelper', iconCls: 'grid-shortcut', module: 'ImpexHelper-win' },
                     { name: 'DatahubVirtualizer', iconCls: 'datahub-shortcut', module: 'DatahubVirtualizer-win' },
                     { name: 'JDBCLogAnalyzer', iconCls: 'jdbc-shortcut', module: 'JDBCLogAnalyzer-win' },
+                    { name: 'JavaEnvironmentBrowser', iconCls: 'java-shortcut', module: 'JavaEnvironmentBrowser-win' },
+                    { name: 'SpringContextBrowser', iconCls: 'spring-shortcut', module: 'SpringContextBrowser-win' },
                     { name: 'ThreadDumpAnalyzer', iconCls: 'thread-shortcut', module: 'ThreadDumpAnalyzer-win' }
                 ]
             }),
@@ -100,6 +106,8 @@ Ext.define('hybrisDesktop.App', {
                 { name: 'ImpexHelper', iconCls: 'icon-grid', module: 'ImpexHelper-win' },
                 { name: 'DatahubVirtualizer', iconCls: 'icon-datahub', module: 'DatahubVirtualizer-win' },
                 { name: 'JDBCLogAnalyzer', iconCls: 'icon-jdbc', module: 'JDBCLogAnalyzer-win' },
+                { name: 'JavaEnvironmentBrowser', iconCls: 'icon-java', module: 'JavaEnvironmentBrowser-win' },
+                { name: 'SpringContextBrowser', iconCls: 'icon-spring', module: 'SpringContextBrowser-win' },
                 { name: 'ThreadDumpAnalyzer', iconCls: 'icon-threaddump', module: 'ThreadDumpAnalyzer-win' }
             ],
             trayItems: [

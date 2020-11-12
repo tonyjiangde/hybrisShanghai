@@ -110,4 +110,21 @@
 	<bean id="defaultJdbclogAnalyzer" class="org.hybris.shanghai.utils.DefaultJdbclogAnalyzer" scope="prototype">
 	</bean>
 	
+	
+	<alias name="defaultJavaClassLoaderService" alias="javaClassLoaderService"/>
+    <bean id="defaultJavaClassLoaderService" class="org.hybris.shanghai.services.impl.DefaultJavaClassLoaderService"> 
+    </bean>
+    <alias name="defaultJavaClassLoaderFacade" alias="javaClassLoaderFacade"/>
+    <bean id="defaultJavaClassLoaderFacade" class="org.hybris.shanghai.facades.impl.DefaultJavaClassLoaderFacade"> 
+    	<property name="javaClassLoaderService" ref="javaClassLoaderService"></property>
+    </bean>
+    
+    <alias name="defaultSpringContextBrowserService" alias="springContextBrowserService"/>
+    <bean id="defaultSpringContextBrowserService" class="org.hybris.shanghai.services.impl.DefaultSpringContextBrowserService"> 
+    </bean>
+    <alias name="defaultSpringContextBrowserFacade" alias="springContextBrowserFacade"/>
+    <bean id="defaultSpringContextBrowserFacade" class="org.hybris.shanghai.facades.impl.DefaultSpringContextBrowserFacade"> 
+    	<property name="springContextBrowserService" ref="springContextBrowserService"></property>
+    </bean>
+	
 </beans>
