@@ -14,6 +14,8 @@ import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.catalina.Container;
 import org.hybris.shanghai.services.JavaClassLoaderService;
@@ -124,28 +126,31 @@ public class DefaultJavaClassLoaderService implements JavaClassLoaderService
 		return result;
 	}
 
-	void find_recursively(final File[] my_arr, int my_index, final int sub_level, final String cn, final ArrayList<String> al)
+	void find_recursively(final File[] my_arr, int my_index, final int sub_level, final String pattern, final ArrayList<String> al)
 	{
+		final Pattern p = Pattern.compile(pattern);
 		if (my_index == my_arr.length)
 		{
 			return;
 		}
-		if (my_arr[my_index].isFile() && my_arr[my_index].getAbsolutePath().endsWith(cn))
+		final Matcher m = p.matcher(my_arr[my_index].getAbsolutePath());
+		if (my_arr[my_index].isFile() && m.find())
 		{
 			al.add(my_arr[my_index].getAbsolutePath());
 		}
 		else if (my_arr[my_index].isDirectory())
 		{
-			find_recursively(my_arr[my_index].listFiles(), 0, sub_level + 1, cn, al);
+			find_recursively(my_arr[my_index].listFiles(), 0, sub_level + 1, pattern, al);
 		}
-		find_recursively(my_arr, ++my_index, sub_level, cn, al);
+		find_recursively(my_arr, ++my_index, sub_level, pattern, al);
 	}
 
 	@Override
-	public LinkedHashMap<String, ArrayList<String>> findClass(final String cn)
+	public LinkedHashMap<String, ArrayList<String>> findClass(final String pattern)
 	{
 		//final String cn = classname;
 		final LinkedHashMap<String, ArrayList<String>> result = new LinkedHashMap<>();
+		final Pattern p = Pattern.compile(pattern);
 		try
 		{
 			final Field privateField = org.apache.catalina.startup.Bootstrap.class.getDeclaredField("daemon");
@@ -172,7 +177,8 @@ public class DefaultJavaClassLoaderService implements JavaClassLoaderService
 						{
 							if (url.getPath().endsWith(".jar"))
 							{
-								if (url.getPath().toUpperCase().endsWith(cn.toUpperCase()))
+								final Matcher m = p.matcher(url.getPath());
+								if (m.find())
 								{
 									tmp.add(url.getPath());
 								}
@@ -181,7 +187,8 @@ public class DefaultJavaClassLoaderService implements JavaClassLoaderService
 								while (e.hasMoreElements())
 								{
 									final JarEntry je = e.nextElement();
-									if (!je.isDirectory() && je.getName().toUpperCase().endsWith(cn.toUpperCase()))
+									final Matcher m2 = p.matcher(je.getName());
+									if (!je.isDirectory() && m2.find())
 									{
 										tmp.add(url.getPath().concat("=>" + je.getName()));
 									}
@@ -191,7 +198,8 @@ public class DefaultJavaClassLoaderService implements JavaClassLoaderService
 							}
 							else
 							{
-								if (f.getAbsolutePath().toUpperCase().endsWith(cn.toUpperCase()))
+								final Matcher m = p.matcher(f.getAbsolutePath());
+								if (m.find())
 								{
 									tmp.add(f.getAbsolutePath());
 								}
@@ -208,7 +216,7 @@ public class DefaultJavaClassLoaderService implements JavaClassLoaderService
 							 * for (final File f : listOfFiles) { if (!f.isDirectory() && f.getAbsolutePath().endsWith(cn)) {
 							 * System.out.println(f.getAbsolutePath() + "*********"); tmp.add(f.getAbsolutePath()); } }
 							 */
-							find_recursively(listOfFiles, 0, 0, cn, tmp);
+							find_recursively(listOfFiles, 0, 0, pattern, tmp);
 						}
 
 
@@ -234,7 +242,8 @@ public class DefaultJavaClassLoaderService implements JavaClassLoaderService
 				{
 					if (url.getPath().endsWith(".jar"))
 					{
-						if (url.getPath().toUpperCase().endsWith(cn.toUpperCase()))
+						final Matcher m = p.matcher(url.getPath());
+						if (m.find())
 						{
 							out.add(url.getPath());
 						}
@@ -243,7 +252,8 @@ public class DefaultJavaClassLoaderService implements JavaClassLoaderService
 						while (e.hasMoreElements())
 						{
 							final JarEntry je = e.nextElement();
-							if (!je.isDirectory() && je.getName().toUpperCase().endsWith(cn.toUpperCase()))
+							final Matcher m2 = p.matcher(je.getName());
+							if (!je.isDirectory() && m2.find())
 							{
 								out.add(url.getPath().concat("=>" + je.getName()));
 							}
@@ -253,7 +263,8 @@ public class DefaultJavaClassLoaderService implements JavaClassLoaderService
 					}
 					else
 					{
-						if (f.getAbsolutePath().toUpperCase().endsWith(cn.toUpperCase()))
+						final Matcher m = p.matcher(f.getAbsolutePath());
+						if (m.find())
 						{
 							out.add(f.getAbsolutePath());
 						}
@@ -263,14 +274,14 @@ public class DefaultJavaClassLoaderService implements JavaClassLoaderService
 				}
 				else if (f.isDirectory())
 				{
-					System.out.println(url.getPath() + "*********");
+
 
 					final File[] listOfFiles = f.listFiles();
 					/*
 					 * for (final File f : listOfFiles) { if (!f.isDirectory() && f.getAbsolutePath().endsWith(cn)) {
 					 * System.out.println(f.getAbsolutePath() + "*********"); tmp.add(f.getAbsolutePath()); } }
 					 */
-					find_recursively(listOfFiles, 0, 0, cn, out);
+					find_recursively(listOfFiles, 0, 0, pattern, out);
 				}
 
 				/*
@@ -306,7 +317,8 @@ public class DefaultJavaClassLoaderService implements JavaClassLoaderService
 						{
 							if (url.getPath().endsWith(".jar"))
 							{
-								if (url.getPath().toUpperCase().endsWith(cn.toUpperCase()))
+								final Matcher m = p.matcher(url.getPath());
+								if (m.find())
 								{
 									tmp.add(url.getPath());
 								}
@@ -315,7 +327,8 @@ public class DefaultJavaClassLoaderService implements JavaClassLoaderService
 								while (e.hasMoreElements())
 								{
 									final JarEntry je = e.nextElement();
-									if (!je.isDirectory() && je.getName().toUpperCase().endsWith(cn.toUpperCase()))
+									final Matcher m2 = p.matcher(je.getName());
+									if (!je.isDirectory() && m2.find())
 									{
 										tmp.add(url.getPath().concat("=>" + je.getName()));
 									}
@@ -325,7 +338,8 @@ public class DefaultJavaClassLoaderService implements JavaClassLoaderService
 							}
 							else
 							{
-								if (f.getAbsolutePath().toUpperCase().endsWith(cn.toUpperCase()))
+								final Matcher m = p.matcher(f.getAbsolutePath());
+								if (m.find())
 								{
 									tmp.add(f.getAbsolutePath());
 								}
@@ -342,7 +356,7 @@ public class DefaultJavaClassLoaderService implements JavaClassLoaderService
 							 * for (final File f : listOfFiles) { if (!f.isDirectory() && f.getAbsolutePath().endsWith(cn)) {
 							 * System.out.println(f.getAbsolutePath() + "*********"); tmp.add(f.getAbsolutePath()); } }
 							 */
-							find_recursively(listOfFiles, 0, 0, cn, tmp);
+							find_recursively(listOfFiles, 0, 0, pattern, tmp);
 						}
 						/*
 						 * if (url.getPath().endsWith(".jar")) { final JarFile jarFile = new JarFile(url.getPath()); final

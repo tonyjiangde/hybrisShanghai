@@ -323,7 +323,7 @@ Ext.define('hybrisDesktop.JavaEnvironmentBrowser', {
                  //height:200,
                  layout: 'vbox',
                  fieldDefaults: {
-                     labelAlign: 'left',
+                     labelAlign: 'top',
                      msgTarget: 'side'
                      
                      
@@ -333,7 +333,7 @@ Ext.define('hybrisDesktop.JavaEnvironmentBrowser', {
                      xtype: 'textfield',
                      name: 'name',
                      itemId: 'name',
-                     fieldLabel: 'Search Resource',
+                     fieldLabel: 'Search Resource (Regex)',
                      width: '100%'
                  }/*,{
                      xtype: 'textareafield',
@@ -359,7 +359,8 @@ Ext.define('hybrisDesktop.JavaEnvironmentBrowser', {
                      text: 'Search',
                      handler: function(){
                          if(Boolean(formPanel.down('#name').getValue())){
-                        	 var url2 = 'services/findresource/?name='+formPanel.down('#name').getValue();
+                        	 var url2 = 'services/findresource/?name='+encodeURIComponent(formPanel.down('#name').getValue());
+                        	 
                         	 console.log(url2);
                         	 /*Ext.Ajax.request({ 
                      		    url:url2, 
@@ -390,8 +391,8 @@ Ext.define('hybrisDesktop.JavaEnvironmentBrowser', {
                  //width: '60%',
                  //minWidth: 100,
                  //itemId: 'cp',
-                 height:110,
-                 minHeight: 110,
+                 height:130,
+                 minHeight: 130,
                  //bodyPadding: 10,
                  //stateId: 'centerRegion',
                  //stateful: true,

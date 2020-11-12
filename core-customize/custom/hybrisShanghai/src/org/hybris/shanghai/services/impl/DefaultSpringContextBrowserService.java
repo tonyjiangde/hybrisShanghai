@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletContext;
 
@@ -370,6 +372,9 @@ public class DefaultSpringContextBrowserService implements SpringContextBrowserS
 	public LinkedHashMap<ApplicationContext, LinkedHashMap<String, BeanDefinition>> findBeanDefinition(final String contextid,
 			final String beanid, final String beanalias, final String beanclass)
 	{
+		final Pattern beanidpattern = Pattern.compile(beanid);
+		final Pattern beanaliaspattern = Pattern.compile(beanalias);
+		final Pattern beanclasspattern = Pattern.compile(beanclass);
 
 		final LinkedHashMap<ApplicationContext, LinkedHashMap<String, BeanDefinition>> result = new LinkedHashMap<>();
 		final LinkedHashMap<String, ApplicationContext> ctxs = getAllSpringContext();
@@ -383,7 +388,8 @@ public class DefaultSpringContextBrowserService implements SpringContextBrowserS
 				final String beanname = (String) iterator.next();
 				if (!StringUtils.isEmpty(beanid))
 				{
-					if (beanname.toLowerCase().contains(beanid.toLowerCase()))
+					final Matcher m = beanidpattern.matcher(beanname);
+					if (m.find())
 					{
 						bresult.put(beanname, bs.get(beanname));
 
@@ -396,7 +402,8 @@ public class DefaultSpringContextBrowserService implements SpringContextBrowserS
 					final String[] alias = ctx.getAliases(beanname);
 					for (final String a : alias)
 					{
-						if (a.toLowerCase().contains(beanalias.toLowerCase()))
+						final Matcher m = beanaliaspattern.matcher(a);
+						if (m.find())
 						{
 							bresult.put(beanname, bs.get(beanname));
 
@@ -409,7 +416,8 @@ public class DefaultSpringContextBrowserService implements SpringContextBrowserS
 				{
 					if (bs.get(beanname).getBeanClassName() != null)
 					{
-						if (bs.get(beanname).getBeanClassName().toLowerCase().contains(beanclass.toLowerCase()))
+						final Matcher m = beanclasspattern.matcher(bs.get(beanname).getBeanClassName());
+						if (m.find())
 						{
 							bresult.put(beanname, bs.get(beanname));
 

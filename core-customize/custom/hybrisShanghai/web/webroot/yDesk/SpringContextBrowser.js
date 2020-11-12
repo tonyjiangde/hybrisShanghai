@@ -345,7 +345,7 @@ Ext.define('hybrisDesktop.SpringContextBrowser', {
                      xtype: 'textfield',
                      name: 'name',
                      itemId: 'name',
-                     fieldLabel: 'Search Resource',
+                     fieldLabel: 'Search Resource (Regex)',
                      width: '80%'
                  },
                  combo/*,{
@@ -377,7 +377,7 @@ Ext.define('hybrisDesktop.SpringContextBrowser', {
                      text: 'Search',
                      handler: function(){
                          if(Boolean(formPanel.down('#name').getValue())){
-                        	 var input =formPanel.down('#name').getValue();
+                        	 var input =encodeURIComponent(formPanel.down('#name').getValue());
                         	 var mode = formPanel.down('#combo').getValue();
                         	 var url2 = 'services/springcontext/search?';
                         	 if(mode=="all"){
