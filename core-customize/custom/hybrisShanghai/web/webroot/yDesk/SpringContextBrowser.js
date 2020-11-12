@@ -364,17 +364,14 @@ Ext.define('hybrisDesktop.SpringContextBrowser', {
                  buttons: [{
                      text: 'Clear',
                      handler: function(){
-                         if(Boolean(formPanel.down('#name').getValue())){
-                        	 formPanel.down('#name').setValue('');
-                        	 tree.getStore().proxy.url = 'services/springcontext';
-                        	 tree.getStore().load();
-                        	 me.searchmode = false;
-                        	 me.searchingmode = null;
-                        	 me.searchingdata =null;
-                        	 beangrid.getStore().removeAll();
-                        	 beangrid.getStore().proxy.url = '';
-      		        		
-                         }
+                    	 formPanel.down('#name').setValue('');
+                    	 tree.getStore().proxy.url = 'services/springcontext';
+                    	 tree.getStore().load();
+                    	 me.searchmode = false;
+                    	 me.searchingmode = null;
+                    	 me.searchingdata =null;
+                    	 beangrid.getStore().removeAll();
+                    	 beangrid.getStore().proxy.url = '';
                      }
                  },{
                      text: 'Search',
@@ -627,7 +624,7 @@ Ext.define('hybrisDesktop.SpringContextBrowser', {
                 itemId: 'ep',
                 //minHeight: 160,
                 //bodyPadding: 10,
-                stateId: 'eastRegion',
+                stateId: 'springeastRegion',
                 stateful: true
             });
             var tree = Ext.create('Ext.tree.Panel', {

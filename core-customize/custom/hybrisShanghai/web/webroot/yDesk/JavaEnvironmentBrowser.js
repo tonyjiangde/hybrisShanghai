@@ -351,11 +351,9 @@ Ext.define('hybrisDesktop.JavaEnvironmentBrowser', {
                  buttons: [{
                      text: 'Clear',
                      handler: function(){
-                         if(Boolean(formPanel.down('#name').getValue())){
-                        	 formPanel.down('#name').setValue('');
-                        	 tree.getStore().proxy.url = 'services/urlstree';
-                        	 tree.getStore().load();
-                         }
+                    	 formPanel.down('#name').setValue('');
+                    	 tree.getStore().proxy.url = 'services/urlstree';
+                    	 tree.getStore().load();
                      }
                  },{
                      text: 'Search',
