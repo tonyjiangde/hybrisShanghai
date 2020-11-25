@@ -86,6 +86,10 @@ Ext.define('hybrisDesktop.JavaEnvironmentBrowser', {
         		   region: 'center',
         		   store: treestore,
         		   rootVisible: false,
+				   viewConfig: {  //this config is passed to the view
+				        loadMask: true
+				    },
+				   
         		   columns: [{
         		        xtype: 'treecolumn', //this is so we know which column will show the tree
         		        text: 'Forum',

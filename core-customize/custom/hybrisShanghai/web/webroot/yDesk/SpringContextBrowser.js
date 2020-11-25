@@ -468,7 +468,8 @@ Ext.define('hybrisDesktop.SpringContextBrowser', {
                 store: beanstore,
                 flex: 3,
                 viewConfig: {
-                    stripeRows: true
+                    stripeRows: true,
+					loadMask: true
                 },
                 selModel: {
                     selType: 'cellmodel'
@@ -637,6 +638,9 @@ Ext.define('hybrisDesktop.SpringContextBrowser', {
      		   region: 'center',
      		   store: treestore,
      		   rootVisible: false,
+				viewConfig: {  //this config is passed to the view
+				        loadMask: true
+				    },
      		   columns: [{
      		        xtype: 'treecolumn', //this is so we know which column will show the tree
      		        text: 'Context',
