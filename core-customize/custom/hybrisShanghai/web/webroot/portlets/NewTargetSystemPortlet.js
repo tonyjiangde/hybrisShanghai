@@ -136,7 +136,7 @@ Ext.define('Ext.app.NewTargetSystemItem', {
             forceSelection: true,
             allowBlank: false,
             tooltip: 'Enter a exportCode',
-            store: createStore({
+            store: mycreateStore({
                 proxy: {
                     type: 'ajax',
                     url: 'services/showtypes.do',
